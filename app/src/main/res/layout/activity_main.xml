@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/activity_main"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    tools:context="com.ganshenml.imbeddedscrolllistviewapp.MainActivity">
+
+    <com.ganshenml.imbeddedscrolllistviewapp.widgets.PageListScrollView
+        android:id="@+id/scrollView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/activity_horizontal_margin"
+                android:layout_marginRight="@dimen/activity_horizontal_margin"
+                android:text="@string/text" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1px"
+                android:layout_marginBottom="@dimen/activity_vertical_margin_huge_super"
+                android:layout_marginTop="@dimen/activity_vertical_margin_huge_super"
+                android:background="@color/colorAccent" />
+
+            <com.ganshenml.imbeddedscrolllistviewapp.widgets.ImbeddedListView
+                android:id="@+id/commentLv"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"></com.ganshenml.imbeddedscrolllistviewapp.widgets.ImbeddedListView>
+        </LinearLayout>
+    </com.ganshenml.imbeddedscrolllistviewapp.widgets.PageListScrollView>
+
+</RelativeLayout>

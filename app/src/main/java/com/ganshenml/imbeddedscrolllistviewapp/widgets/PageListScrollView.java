@@ -24,10 +24,6 @@ public class PageListScrollView extends ScrollView {
     @Override
     protected void onScrollChanged(int l, int t, int oldl, int oldt) {
         super.onScrollChanged(l, t, oldl, oldt);
-
-//        L.e(TAG, "onScrollChanged: 竖直高度t = " + t);
-//        L.e(TAG, "onScrollChanged: 竖直高度oldt = " + oldt);
-
         //将高度传出去
         if (mOnScrollHeightListener != null) {
             mOnScrollHeightListener.onScrollHeight(t);
@@ -35,7 +31,7 @@ public class PageListScrollView extends ScrollView {
     }
 
 
-    //滚动到底部时，clampedY变为true，其余情况为false，通过回调将状态传出去即可
+    //滚动到底部时，clampedY变为true，此时将回调将状态传出去
     @Override
     protected void onOverScrolled(int scrollX, int scrollY, boolean clampedX, boolean clampedY) {
         super.onOverScrolled(scrollX, scrollY, clampedX, clampedY);

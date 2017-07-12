@@ -2,6 +2,7 @@ package com.ganshenml.imbeddedscrolllistviewapp.widgets;
 
 import android.content.Context;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.AbsListView;
@@ -9,12 +10,12 @@ import android.widget.ListView;
 
 import com.ganshenml.imbeddedscrolllistviewapp.R;
 
-public class ImbeddedListView extends ListView implements AbsListView.OnScrollListener {
+import java.util.List;
+
+public class ImbeddedListView extends ListView {
     private View footer;// 底部布局
-    private int totalItemCount;// 总数量
-    private int lastVisibleItem;// 最后一个可见的item;
-    private boolean isLoading;// 判断变量
-    private ILoadListener iLoadListener;// 接口变量
+    private boolean isLoading;// 判断是否正在加载中
+
 
     public ImbeddedListView(Context context) {
         super(context);
@@ -31,14 +32,12 @@ public class ImbeddedListView extends ListView implements AbsListView.OnScrollLi
         initView(context);
     }
 
-    // listview加载底部布局
+
     private void initView(Context context) {
         LayoutInflater inflater = LayoutInflater.from(context);
         footer = inflater.inflate(R.layout.listview_footer_view, null);
-        // 设置隐藏底部布局
         footer.findViewById(R.id.loading_layout).setVisibility(View.GONE);
         this.addFooterView(footer);
-        this.setOnScrollListener(this);
     }
 
     @Override
@@ -48,26 +47,10 @@ public class ImbeddedListView extends ListView implements AbsListView.OnScrollLi
         super.onMeasure(widthMeasureSpec, expandSpec);
     }
 
-    @Override
-    public void onScrollStateChanged(AbsListView view, int scrollState) {
-        if (totalItemCount == lastVisibleItem && scrollState == SCROLL_STATE_IDLE) {
-            if (!isLoading) {
-                isLoading = true;
-                footer.findViewById(R.id.loading_layout).setVisibility(View.VISIBLE);
-                iLoadListener.onLoad();// 加载更多（获取接口）
-            }
-        }
-    }
 
-    @Override
-    public void onScroll(AbsListView view, int firstVisibleItem, int visibleItemCount, int totalItemCount) {
-        this.lastVisibleItem = firstVisibleItem + visibleItemCount;
-        this.totalItemCount = totalItemCount;
-    }
-
-
-
-    // 加载完成通知隐藏
+    /**
+     * 加载完成，1.设置标志；2.隐藏footer
+     */
     public void loadComplete() {
         if (footer == null) {
             return;
@@ -76,6 +59,9 @@ public class ImbeddedListView extends ListView implements AbsListView.OnScrollLi
         footer.findViewById(R.id.loading_layout).setVisibility(View.GONE);
     }
 
+    /**
+     * 开始加载，1.设置标志；2.显示footer
+     */
     public void startLoading() {
         if (footer == null) {
             return;
@@ -88,12 +74,4 @@ public class ImbeddedListView extends ListView implements AbsListView.OnScrollLi
         return isLoading;
     }
 
-    public void setInterface(ILoadListener iLoadListener) {
-        this.iLoadListener = iLoadListener;
-    }
-
-    // 加载更多数据的回调接口
-    public interface ILoadListener {
-        void onLoad();
-    }
 }

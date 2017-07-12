@@ -15,7 +15,7 @@ import com.ganshenml.imbeddedscrolllistviewapp.widgets.PageListScrollView;
 import java.util.ArrayList;
 import java.util.List;
 
-public class MainActivity extends AppCompatActivity implements ImbeddedListView.ILoadListener, PageListScrollView.OnScrollToBottomListener {
+public class MainActivity extends AppCompatActivity implements PageListScrollView.OnScrollToBottomListener {
     private PageListScrollView scrollView;
     private ImbeddedListView commentLv;
     private CommentListViewAdapter commentListViewAdapter;
@@ -55,7 +55,6 @@ public class MainActivity extends AppCompatActivity implements ImbeddedListView.
             commentEntityList.addAll(dataList);
             commentListViewAdapter = new CommentListViewAdapter(this, commentEntityList);
             commentLv.setAdapter(commentListViewAdapter);
-            commentLv.setInterface(this);
             return;
         }
 
@@ -94,10 +93,6 @@ public class MainActivity extends AppCompatActivity implements ImbeddedListView.
         }
     }
 
-    @Override
-    public void onLoad() {
-
-    }
 
     /**
      * 模拟网络请求后返回的数据
@@ -110,7 +105,7 @@ public class MainActivity extends AppCompatActivity implements ImbeddedListView.
         }
         ArrayList<CommentEntity> list = new ArrayList<>();
         for (int i = currentpageCount + 1; i <= pagesize + currentpageCount; i++) {
-            CommentEntity commentEntity = new CommentEntity(i + "", i + "位", "", "这是内容" + i, "2017年7月11日19:20", "2017年7月11日19:20");
+            CommentEntity commentEntity = new CommentEntity(i + "", i + "位", "", "这是内容" + i, "2017年7月12日19:20", "2017年7月12日19:20");
             list.add(commentEntity);
         }
         currentpage++;
